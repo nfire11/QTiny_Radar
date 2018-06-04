@@ -14,7 +14,7 @@ Radar chart extension based on eCharts for Qlik Sense
 6. Use color list to customise colors, similar to max value list. e.g. ["red","green","blue","grey","black"]
 
 ### Config example:
-![alt text](https://raw.githubusercontent.com/nfire11/QTiny_Slider/master/QTiny_Radar_Sample2.png "Sample")
+![alt text](https://raw.githubusercontent.com/nfire11/QTiny_Radar/master/QTiny_Radar_Sample2.png "Sample")
 
 
 ## Sample
