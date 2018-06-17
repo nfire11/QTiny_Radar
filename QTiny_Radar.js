@@ -69,7 +69,7 @@ function ( qlik,$,echarts) {
                     		label: "About",
                     		items:{
 							About0: {
-	                            label: "QTiny Radar V1.0",
+	                            label: "QTiny Radar V1.1",
 	                            component: "text",
 	                            },							
 							About1: {
@@ -99,6 +99,12 @@ function ( qlik,$,echarts) {
 			console.log(qtable);			
 			var q_indicators=[];
 			var max_list=[];
+			var dim_info='';
+			$.each(self.backendApi.getDimensionInfos(),function(key, value){
+				console.log(value["qFallbackTitle"]);
+				dim_info=value["qFallbackTitle"];
+				//console.log(value);
+			});			
 			$.each(self.backendApi.getMeasureInfos(),function(key, value){
 				//console.log(key);
 				//console.log(value["qFallbackTitle"]);
@@ -172,8 +178,17 @@ function ( qlik,$,echarts) {
 					option["color"]=eval(layout.ColorList);
 			};
 
-			var myChart = echarts.init(document.getElementById(radar_id),"macarons");
+			var myChart = echarts.init(document.getElementById(radar_id),"default");
 			myChart.setOption(option);
+			myChart.on('click', function (params) {
+					var temp_select_list=[];
+					temp_select_list.push({qText:params["data"]["name"]});
+					app.field(dim_info).selectValues(temp_select_list,true,true);
+					// do something
+				});
+
+
+
 	}
 
 	};
