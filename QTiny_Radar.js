@@ -7,8 +7,8 @@ function ( qlik,$,echarts) {
 				qDimensions: [],
 				qMeasures: [],
 				qInitialDataFetch: [{
-					qWidth: 7,
-					qHeight: 1150,
+					qWidth: 10,
+					qHeight: 999,
 				}]
 			}
 		},
@@ -40,8 +40,85 @@ function ( qlik,$,echarts) {
 	                            type: "string",
 	                            //component: "textarea",
 	                            defaultValue: "undefined",
-	                            },							
-	                        TextBoxA: {
+	                            },
+							TextBox1: {
+	                            ref: "RadarShape",
+	                            label: "Shape - Circle",
+	                            type: "boolean",
+	                            //component: "textarea",
+	                            defaultValue: false,
+	                            },
+							TextBox2: {
+								type: "number",
+								component: "slider",
+								label: "Opacity",
+								ref: "RadarOpacity",
+								min: 0,
+								max: 1,
+								step: 0.05,
+								defaultValue: 0
+	                            },
+
+							TextBox3: {
+								type: "string",
+								component: "dropdown",
+								label: "Theme",
+								ref: "RadarTheme",
+								options: [{
+									value: "default",
+									label: "Default"
+								}, {
+									value: "light",
+									label: "Light"
+								},{
+									value: "dark",
+									label: "Dark"
+								}],
+								defaultValue: "default"
+	                            },								
+							SymbolDrop: {
+								type: "string",
+								component: "dropdown",
+								label: "Symbol Type",
+								ref: "SymbolType",
+								options: [{
+									value: "none",
+									label: "None"
+								},{
+									value: "circle",
+									label: "Circle"
+								}, {
+									value: "rect",
+									label: "Rect"
+								},{
+									value: "roundRect",
+									label: "RoundRect"
+								},{
+									value: "triangle",
+									label: "Triangle"
+								},{
+									value: "diamond",
+									label: "Diamond"
+								},{
+									value: "pin",
+									label: "Pin"
+								},{
+									value: "arrow",
+									label: "Arrow"
+								}],
+								defaultValue: "default"
+	                            },								
+							SymbolSlider0: {
+								type: "number",
+								component: "slider",
+								label: "Symbol Size",
+								ref: "NormalSymbolSize",
+								min: 0,
+								max: 20,
+								step: 1,
+								defaultValue: 0
+	                            },
+							TextBoxA: {
 	                            ref: "MaxList",
 	                            label: "Max Value List",
 	                            type: "string",
@@ -64,12 +141,42 @@ function ( qlik,$,echarts) {
 	                            },						
 								
 				}},
+				SectionNormal:{
+                    type: "items",
+                    label: "Item Style - Normal",
+                    items:{
+							LineSlider0: {
+								type: "number",
+								component: "slider",
+								label: "Line Width",
+								ref: "NormalLineWidth",
+								min: 0,
+								max: 20,
+								step: 1,
+								defaultValue: 0
+	                            },							
+							}},
+				SectionEmphasis:{
+                    type: "items",
+                    label: "Item Style - Emphasis",
+                    items:{
+							LineSlider1: {
+								type: "number",
+								component: "slider",
+								label: "Line Width",
+								ref: "EmphasisLineWidth",
+								min: 0,
+								max: 20,
+								step: 1,
+								defaultValue: 0
+	                            },									
+							}},
 				SectionB:{
                     type: "items",
                     		label: "About",
                     		items:{
 							About0: {
-	                            label: "QTiny Radar V1.1",
+	                            label: "QTiny Radar V1.2",
 	                            component: "text",
 	                            },							
 							About1: {
@@ -110,7 +217,7 @@ function ( qlik,$,echarts) {
 				//console.log(value["qFallbackTitle"]);
 				max_list.push(0);
 			});
-			console.log(max_list);
+			//console.log(max_list);
 			//console.log(q_indicators);
 			var q_data=[];
 			var q_legend=[];
@@ -128,7 +235,10 @@ function ( qlik,$,echarts) {
 				});
 				var q_data_temp={
 							value : temp_data,
-							name : row[0]["qText"]
+							name : row[0]["qText"],
+							symbolSize:layout.NormalSymbolSize,
+							symbol:layout.SymbolType,
+
 				};
 				q_legend.push(row[0]["qText"]);
 				q_data.push(q_data_temp);
@@ -151,6 +261,7 @@ function ( qlik,$,echarts) {
 				},
 				tooltip: {},
 				legend: {
+					//show:false,
 					data: q_legend,
 				},
 				radar: {
@@ -168,17 +279,33 @@ function ( qlik,$,echarts) {
 				series: [{
 					name: layout.radar_name,
 					type: 'radar',
-					// areaStyle: {normal: {}},
-					data : q_data
+					areaStyle: {normal:{}},
+					data : q_data,
+					itemStyle:{
+					normal:{
+					lineStyle:{}
+					},
+					emphasis:{
+					lineStyle:{}
+					},
+					},
 				}]
 			};
 			
 			option["legend"][layout.LegendPosition.split(":")[0]]=layout.LegendPosition.split(":")[1];
+			if(layout.LegendPosition==""){
+					option["legend"]["show"]=false;
+			};
 			if(layout.ColorList!=""){
 					option["color"]=eval(layout.ColorList);
 			};
-
-			var myChart = echarts.init(document.getElementById(radar_id),"default");
+			if(layout.RadarShape==true){
+					option["radar"]["shape"]='circle';
+			};
+			option["series"][0]["areaStyle"]["normal"]["opacity"]=layout.RadarOpacity;
+			option["series"][0]["itemStyle"]["normal"]["lineStyle"]["width"]=layout.NormalLineWidth;			
+			option["series"][0]["itemStyle"]["emphasis"]["lineStyle"]["width"]=layout.EmphasisLineWidth;			
+			var myChart = echarts.init(document.getElementById(radar_id),layout.RadarTheme);
 			myChart.setOption(option);
 			myChart.on('click', function (params) {
 					var temp_select_list=[];
