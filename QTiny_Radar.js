@@ -203,12 +203,12 @@ function ( qlik,$,echarts) {
 			//###Render Data
 			var app=qlik.currApp();
 			var qtable=qlik.table(this);
-			console.log(qtable);			
+			//console.log(qtable);			
 			var q_indicators=[];
 			var max_list=[];
 			var dim_info='';
 			$.each(self.backendApi.getDimensionInfos(),function(key, value){
-				console.log(value["qFallbackTitle"]);
+				//console.log(value["qFallbackTitle"]);
 				dim_info=value["qFallbackTitle"];
 				//console.log(value);
 			});			
