@@ -1,21 +1,28 @@
 # QTiny Radar
 Radar chart extension based on eCharts for Qlik Sense
 # Features:
-* Support up to 6 measures
-* Customisable colors and legends
-* Auto/Customisable max values 
+* Customisable style (symbol, line, theme, colour...)
+* Responsiveness
 
 # Usage:
 1. Choose Dimension
-2. Choose Measures (<=6)
-3. Use Chart Name to set the Title
-4. Use Max Value List to set the max value of the each measure, should equal to the measures selected: e.g. [10,50,20,30,5]
-5. Set the legend position. Can use bottom or top. e.g. bottom:10, top:20
-6. Use color list to customise colors, similar to max value list. e.g. ["red","green","blue","grey","black"]
+2. Choose Measures
+
+# Options:
+* Chart Name: Title
+* Shape - Circle: Shape of the radar chart, tick to use circle
+* Opacity: Transparency of the fill
+* Theme: Default, Light, Dark for different color patterns
+* Symbol Type: Type of the markers - dot, triangle...
+* Max Value List: define the max value of each measure - should be a list, follow the order of measure: [100,50,100,20]
+* Legend Position: position of legend use blank to hide the legend
+* Color List: define customised colours, should be a list: ["red","green","#FF0000","blue"]
+* Item Style - Normal => Line Width: Width of the line
+* Item Style - Emphasis => Line Width: Width of the line when mouse moveon
 
 ### Config example:
 ![alt text](https://raw.githubusercontent.com/nfire11/QTiny_Radar/master/QTiny_Radar_Sample2.png "Sample")
 
 
 ## Sample
-![alt text](https://raw.githubusercontent.com/nfire11/QTiny_Radar/master/QTiny_Radar_Sample.PNG "Sample")
+![alt text](https://raw.githubusercontent.com/nfire11/QTiny_Radar/master/QTiny_Radar_Sample.png "Sample")
