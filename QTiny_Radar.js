@@ -7,8 +7,8 @@ function ( qlik,$,echarts) {
 				qDimensions: [],
 				qMeasures: [],
 				qInitialDataFetch: [{
-					qWidth: 10,
-					qHeight: 999,
+					qWidth: 20,
+					qHeight: 499,
 				}]
 			}
 		},
@@ -18,11 +18,13 @@ function ( qlik,$,echarts) {
 			items: {
 				dimensions: {
 					uses: "dimensions",
-					min: 1
+					min: 1,
+					max: 1
 				},
 				measures: {
 					uses: "measures",
-					min: 0
+					min: 1,
+					max: 19
 				},
 				sorting: {
 					uses: "sorting"
@@ -56,7 +58,7 @@ function ( qlik,$,echarts) {
 								min: 0,
 								max: 1,
 								step: 0.05,
-								defaultValue: 0
+								defaultValue: 0.35
 	                            },
 
 							TextBox3: {
@@ -106,7 +108,7 @@ function ( qlik,$,echarts) {
 									value: "arrow",
 									label: "Arrow"
 								}],
-								defaultValue: "default"
+								defaultValue: "circle"
 	                            },								
 							SymbolSlider0: {
 								type: "number",
@@ -116,7 +118,7 @@ function ( qlik,$,echarts) {
 								min: 0,
 								max: 20,
 								step: 1,
-								defaultValue: 0
+								defaultValue: 5
 	                            },
 							TextBoxA: {
 	                            ref: "MaxList",
@@ -153,7 +155,7 @@ function ( qlik,$,echarts) {
 								min: 0,
 								max: 20,
 								step: 1,
-								defaultValue: 0
+								defaultValue: 3
 	                            },							
 							}},
 				SectionEmphasis:{
@@ -168,7 +170,7 @@ function ( qlik,$,echarts) {
 								min: 0,
 								max: 20,
 								step: 1,
-								defaultValue: 0
+								defaultValue: 5
 	                            },									
 							}},
 				SectionB:{
